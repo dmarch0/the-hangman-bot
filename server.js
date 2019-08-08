@@ -16,18 +16,12 @@ const webhookToken = randomstring.generate(16);
 
 const port = require("./config/port");
 
-//connect ngrok redirect url
-const ngrok = require("ngrok");
+console.log(`webhook token is ${webhookToken}`);
+client.setWebhook(process.env.BASE_URL + "/" + webhookToken);
+app.use(`/${webhookToken}`, messages);
+app.listen(port, () => console.log(`server listening on port ${port}`));
 
-(async () => {
-  const url = await ngrok.connect(port);
-  console.log(`ngrok connected at ${url}`);
-  console.log(`webhook token is ${webhookToken}`);
-  client.setWebhook(process.env.BASE_URL + "/" + webhookToken);
-  app.use(`/${webhookToken}`, messages);
-  app.listen(port, () => console.log(`server listening on port ${port}`));
-})();
-
+//test route
 app.get("/", (req, res) => {
   res.json({ ok: "ok" });
 });
