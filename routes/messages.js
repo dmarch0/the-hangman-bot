@@ -5,20 +5,22 @@ const availableCommands = require("../commands");
 const gameData = {};
 
 router.post("/", (req, res, next) => {
-  //commented code line to wash down the drain pipe in case too many errors
+  //commented code line to wash down the drain pipe pending errors in case errors overflow
   //return res.status(200).json({ ok: true });
   const messageText = req.body.message.text;
   let response;
-  if (gameData[req.body.message.chat.id]) {
-    response = availableCommands.try.response(req.body.message, gameData);
-  } else {
-    for (let commandKey in availableCommands) {
-      const command = availableCommands[commandKey];
-      if (command.regex.test(messageText)) {
-        response = command.response(req.body.message, gameData);
-      }
+  //Если сообщение - команда, то ответить на команду
+  for (let commandKey in availableCommands) {
+    const command = availableCommands[commandKey];
+    if (command.regex.test(messageText)) {
+      response = command.response(req.body.message, gameData);
     }
   }
+  //Если сообщение не команда, то считать, что идет игра
+  if (!response) {
+    response = availableCommands.try.response(req.body.message, gameData);
+  }
+
   if (response) {
     client
       .sendMessage(req.body.message.chat.id, response)
