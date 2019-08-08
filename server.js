@@ -27,3 +27,7 @@ const ngrok = require("ngrok");
   app.use(`/${webhookToken}`, messages);
   app.listen(port, () => console.log(`server listening on port ${port}`));
 })();
+
+app.get("/", (req, res) => {
+  res.json({ ok: "ok" });
+});
