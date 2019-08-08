@@ -19,7 +19,7 @@ const availableCommands = {
     }
   },
   try: {
-    regex: /^(\/new)(?!\S)/,
+    regex: /^(\/try)(?!\S)/,
     response: (message, gameData) => {
       const letter = extractTextFromCommand(message.text).toUpperCase();
       //Если в тексте сообщения больше, чем одна буква после команды
