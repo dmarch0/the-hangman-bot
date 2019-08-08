@@ -18,14 +18,12 @@ const port = require("./config/port");
 
 //connect ngrok redirect url
 const ngrok = require("ngrok");
-const axios = require("axios");
-const key = require("./config/keys").tgToken;
+
 (async () => {
   const url = await ngrok.connect(port);
   console.log(`ngrok connected at ${url}`);
   console.log(`webhook token is ${webhookToken}`);
-  //   const res = await axios.post(`https://api.telegram.org/bot${key}/setWebhook`);
-  //   console.log(res);
+  client.setWebhook(process.env.BASE_URL + "/" + webhookToken);
   app.use(`/${webhookToken}`, messages);
   app.listen(port, () => console.log(`server listening on port ${port}`));
 })();
