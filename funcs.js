@@ -65,7 +65,7 @@ const gameProcess = (message, gameData) => {
       }
       if (dataEntry.current.join("") === dataEntry.word) {
         const word = dataEntry.word;
-        delete dataEntry;
+        delete gameData[message.chat.id];
         return `Вы победили!, загаданное слово было ${word}`;
       } else {
         return `Такая буква есть, текущее слово: ${dataEntry.current.join(
