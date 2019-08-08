@@ -9,7 +9,7 @@ router.post("/", (req, res, next) => {
   let response;
   for (let commandKey in availableCommands) {
     if (gameData[req.body.message.chat.id]) {
-      response = availableCommands.try(req.body.message, gameData);
+      response = availableCommands.try.response(req.body.message, gameData);
       break;
     }
     const command = availableCommands[commandKey];
