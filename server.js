@@ -12,7 +12,7 @@ const messages = require("./routes/messages");
 
 //generate random webhook token
 const randomstring = require("randomstring");
-const webhookToken = randomstring.generate(16);
+const webhookToken = process.env.WH_TOKEN;
 
 const port = require("./config/port");
 
