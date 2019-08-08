@@ -1,31 +1,20 @@
 const router = require("express").Router();
 const client = require("../bot-client");
+const availableCommands = require("../commands");
 
-const availableCommands = {
-  test: {
-    regex: /^(\/test)/,
-    response: () => "command was test"
-  },
-  new: {
-    regex: /^(\/new)/,
-    response: () => "command was new"
-  }
-};
+const gameData = {};
 
 router.post("/", (req, res, next) => {
   const messageText = req.body.message.text;
-  let messageCommand = "no command";
+  let response;
   for (let commandKey in availableCommands) {
     const command = availableCommands[commandKey];
     if (command.regex.test(messageText)) {
-      messageCommand = command.response();
+      response = command.response(req.body.message, gameData);
     }
   }
   client
-    .sendMessage(
-      req.body.message.chat.id,
-      `Your message text was ${messageText} and command was ${messageCommand}`
-    )
+    .sendMessage(req.body.message.chat.id, response)
     .promise()
     .then(() => res.json({ ok: true }))
     .catch(next);
