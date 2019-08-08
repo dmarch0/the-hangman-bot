@@ -5,6 +5,7 @@ const availableCommands = require("../commands");
 const gameData = {};
 
 router.post("/", (req, res, next) => {
+  return res.status(200).json({ ok: true });
   const messageText = req.body.message.text;
   let response;
   for (let commandKey in availableCommands) {
