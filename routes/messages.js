@@ -8,7 +8,7 @@ router.post("/", (req, res, next) => {
   const messageText = req.body.message.text;
   let response;
   for (let commandKey in availableCommands) {
-    if (gameData[message.chat.id]) {
+    if (gameData[req.body.message.chat.id]) {
       response = availableCommands.try(req.body.message, gameData);
       break;
     }
