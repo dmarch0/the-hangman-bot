@@ -23,7 +23,7 @@ const availableCommands = {
     response: (message, gameData) => {
       const letter = extractTextFromCommand(message.text).toUpperCase();
       //Если в тексте сообщения больше, чем одна буква после команды
-      if (letter.length > 0) {
+      if (letter.length > 1) {
         return "Вы должны написать только одну букву";
       }
       //Если буква уже была, то сообщить об этом
