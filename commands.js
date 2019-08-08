@@ -1,5 +1,6 @@
 const extractTextFromCommand = require("./utils").extractTextFromCommand;
 const createNewGame = require("./utils").createNewGame;
+const gallows = require("./gallows");
 
 const availableCommands = {
   test: {
@@ -51,9 +52,11 @@ const availableCommands = {
           gameData[message.chat.id].mistakes += 1;
           if (gameData[message.chat.id].mistakes >= 10) {
             delete gameData[message.chat.id];
-            return "Игра окончена, вы проиграли!";
+            return `Игра окончена, вы проиграли!\n${gallows[9]}`;
           } else {
-            return `Такой буквы нет, *картинка виселицы*, ошибок ${
+            return `Такой буквы нет\n ${
+              gallows[gameData[message.chat.id].mistakes]
+            }\n Ошибок: ${
               gameData[message.chat.id].mistakes
             }, текущее слово ${gameData[message.chat.id].current.join(" ")}`;
           }

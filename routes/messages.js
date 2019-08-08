@@ -8,7 +8,7 @@ router.post("/", (req, res, next) => {
   //commented code line to wash down the drain pipe in case too many errors
   //return res.status(200).json({ ok: true });
   const messageText = req.body.message.text;
-  let response = "Помогите, я ничего не понимаю!";
+  let response;
   if (gameData[req.body.message.chat.id]) {
     response = availableCommands.try.response(req.body.message, gameData);
   } else {
@@ -19,12 +19,15 @@ router.post("/", (req, res, next) => {
       }
     }
   }
-
-  client
-    .sendMessage(req.body.message.chat.id, response)
-    .promise()
-    .then(() => res.json({ ok: true }))
-    .catch(next);
+  if (response) {
+    client
+      .sendMessage(req.body.message.chat.id, response)
+      .promise()
+      .then(() => res.json({ ok: true }))
+      .catch(next);
+  } else {
+    return res.status(200).json({ ok: true });
+  }
 });
 
 module.exports = router;
