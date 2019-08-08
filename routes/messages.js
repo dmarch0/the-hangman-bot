@@ -1,30 +1,34 @@
 const router = require("express").Router();
 const client = require("../bot-client");
 
-const availableCommands = [/^(\/test)/, /^(\/new)/];
+const availableCommands = {
+  test: {
+    regex: /^(\/test)/,
+    response: () => "command was test"
+  },
+  new: {
+    regex: /^(\/new)/,
+    response: () => "command was new"
+  }
+};
 
 router.post("/", (req, res, next) => {
   const messageText = req.body.message.text;
-  const messageCommand = "";
-  for (let command of availableCommands) {
-    messageCommand += messageText.match(command)[0];
+  let messageCommand = "no command";
+  for (let commandKey in availableCommands) {
+    const command = availableCommands[commandKey];
+    if (command.regex.test(messageText)) {
+      messageCommand = command.response();
+    }
   }
-  if (messageCommand) {
-    client
-      .sendMessage(
-        req.body.message.chat.id,
-        `Your message text was ${messageText} and command was ${messageCommand}`
-      )
-      .promise()
-      .then(() => res.json({ ok: true }))
-      .catch(next);
-  } else {
-    client
-      .sendMessage(req.body.message.chat.id, `No command found`)
-      .promise()
-      .then(() => res.json({ ok: true }))
-      .catch(next);
-  }
+  client
+    .sendMessage(
+      req.body.message.chat.id,
+      `Your message text was ${messageText} and command was ${messageCommand}`
+    )
+    .promise()
+    .then(() => res.json({ ok: true }))
+    .catch(next);
 });
 
 module.exports = router;
