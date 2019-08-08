@@ -1,4 +1,5 @@
 const words = require("./words");
+const gallows = require("./gallows");
 
 const extractTextFromCommand = messageText => {
   return messageText.split(" ")[1];

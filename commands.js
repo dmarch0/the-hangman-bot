@@ -1,6 +1,4 @@
-const extractTextFromCommand = require("./funcs").extractTextFromCommand;
 const createNewGame = require("./funcs").createNewGame;
-const gallows = require("./gallows");
 
 const availableCommands = {
   test: {
