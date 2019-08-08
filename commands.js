@@ -21,6 +21,9 @@ const availableCommands = {
   try: {
     regex: /^(\/try)(?!\S)/,
     response: (message, gameData) => {
+      if (!gameData[message.chat.id]) {
+        return "Игра еще не началась, воспользуйтесь командой new, чтобы начать игру";
+      }
       const letter = extractTextFromCommand(message.text).toUpperCase();
       //Если в тексте сообщения больше, чем одна буква после команды
       if (letter.length > 1) {
@@ -44,6 +47,7 @@ const availableCommands = {
         if (indicesToAddLetter.length === 0) {
           gameData[message.chat.id].mistakes += 1;
           if (gameData[message.chat.id].mistakes >= 10) {
+            delete gameData[message.chat.id];
             return "Игра окончена, вы проиграли!";
           } else {
             return `Такой буквы нет, *картинка виселицы*, ошибок ${
@@ -58,9 +62,9 @@ const availableCommands = {
             gameData[message.chat.id].current.join("") ===
             gameData[message.chat.id].word
           ) {
-            return `Вы победили!, загаданное слово было ${
-              gameData[message.chat.id].word
-            }`;
+            const word = gameData[message.chat.id].word;
+            delete gameData[message.chat.id];
+            return `Вы победили!, загаданное слово было ${word}`;
           } else {
             return `Такая буква есть, текущее слово: ${gameData[
               message.chat.id
