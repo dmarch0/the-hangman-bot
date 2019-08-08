@@ -6,6 +6,7 @@ router.post("/", (req, res, next) => {
   const commands = req.body.message.entities.filter(
     entitie => entitie.type === "bot_command"
   );
+  console.log(commands);
   client
     .sendMessage(
       req.body.message.chat.id,
