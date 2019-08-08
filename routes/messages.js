@@ -8,6 +8,10 @@ router.post("/", (req, res, next) => {
   const messageText = req.body.message.text;
   let response;
   for (let commandKey in availableCommands) {
+    if (gameData[message.chat.id]) {
+      response = availableCommands.try(req.body.message, gameData);
+      break;
+    }
     const command = availableCommands[commandKey];
     if (command.regex.test(messageText)) {
       response = command.response(req.body.message, gameData);

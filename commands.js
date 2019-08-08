@@ -24,8 +24,11 @@ const availableCommands = {
       if (!gameData[message.chat.id]) {
         return "Игра еще не началась, воспользуйтесь командой new, чтобы начать игру";
       }
-      const letter = extractTextFromCommand(message.text).toUpperCase();
+      const letter = message.text.toUpperCase();
       //Если в тексте сообщения больше, чем одна буква после команды
+      if (letter.length === 0) {
+        return "";
+      }
       if (letter.length > 1) {
         return "Вы должны написать только одну букву";
       }
