@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const client = require("../bot-client");
+const client = require("../config/client");
 const availableCommands = require("../commands");
 const gameProcess = require("../funcs").gameProcess;
 
