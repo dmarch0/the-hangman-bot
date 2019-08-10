@@ -35,7 +35,9 @@ const gameProcess = (message, gameData) => {
   }
   //Если буква уже была, то сообщить об этом
   if (dataEntry.alreadyGuessedLetters.includes(letter)) {
-    return "Эта буква уже была!";
+    return `Эта буква уже была!\n Другие буквы, которые уже были:\n${dataEntry.alreadyGuessedLetters.join(
+      ", "
+    )}`;
   } else {
     //Добавить букву в те, что уже были
     dataEntry.alreadyGuessedLetters.push(letter);
@@ -57,7 +59,7 @@ const gameProcess = (message, gameData) => {
         return `Такой буквы нет!\n ${
           gallows[dataEntry.mistakes - 1]
         }\n Осталось жизней: ${10 -
-          dataEntry.mistakes}, текущее слово ${dataEntry.current.join(" ")}`;
+          dataEntry.mistakes}, текущее слово:\n ${dataEntry.current.join(" ")}`;
       }
     } else {
       for (let indice of indicesToAddLetter) {
@@ -68,8 +70,10 @@ const gameProcess = (message, gameData) => {
         delete gameData[message.chat.id];
         return `Вы победили!, загаданное слово было ${word}`;
       } else {
-        return `Такая буква есть, текущее слово: ${dataEntry.current.join(
+        return `Такая буква есть, текущее слово:\n ${dataEntry.current.join(
           " "
+        )}\n Буквы, которые уже были: ${dataEntry.alreadyGuessedLetters.join(
+          ", "
         )}`;
       }
     }
