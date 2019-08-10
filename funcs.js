@@ -33,8 +33,12 @@ const gameProcess = (message, gameData) => {
   if (letter.length > 1) {
     return "Вы должны написать только одну букву";
   }
-  //Если буква уже была, то сообщить об этом
+  //Если буква не кириллица
+  if (!/[\u0400-\u04FF]/i.test(letter)) {
+    return "Это должна быть русская буква!";
+  }
   if (dataEntry.alreadyGuessedLetters.includes(letter)) {
+    //Если буква уже была, то сообщить об этом
     return `Эта буква уже была!\n Другие буквы, которые уже были:\n${dataEntry.alreadyGuessedLetters.join(
       ", "
     )}`;
