@@ -5,7 +5,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //get configed client
-const client = require("./bot-client");
+const client = require("./config/client");
 
 //routes
 const messages = require("./routes/messages");
