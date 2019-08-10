@@ -63,7 +63,11 @@ const gameProcess = (message, gameData) => {
         return `Такой буквы нет!\n ${
           gallows[dataEntry.mistakes - 1]
         }\n Осталось жизней: ${10 -
-          dataEntry.mistakes}, текущее слово:\n ${dataEntry.current.join(" ")}`;
+          dataEntry.mistakes}, текущее слово:\n ${dataEntry.current.join(
+          " "
+        )}\nБуквы, которые уже были: ${dataEntry.alreadyGuessedLetters.join(
+          ", "
+        )}`;
       }
     } else {
       for (let indice of indicesToAddLetter) {
